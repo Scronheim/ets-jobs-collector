@@ -80,7 +80,7 @@ export default {
                 brand: this.telemetry.data.truck.brand.name,
                 model: this.telemetry.data.truck.model.name,
             }
-            const rubRatio = 95.5595567867036
+            const rubRatio = 95.55997232046748
             const revenueInRub = Math.ceil(rubRatio * job.revenue)
             const sendingJob = {
                 ...job,
