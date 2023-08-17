@@ -17,7 +17,7 @@
             {{ item.selectable.truck?.brand }} - {{ item.selectable.truck?.model }}
         </template>
         <template v-slot:item.mass="{ item }">
-            <v-chip color="blue">{{ (item.selectable.cargo.mass / 1000).toFixed(2) }}</v-chip>
+            <v-chip color="blue">{{ (item.selectable.cargo.mass / 1000).toFixed(2) }} т</v-chip>
         </template>
         <template v-slot:item.dist="{ item }">
             <v-chip color="blue">{{ item.selectable.distance.km }} км / {{ item.selectable.distance.miles.toFixed(2) }} миль</v-chip>
@@ -26,7 +26,7 @@
             <v-chip color="blue">{{ getJobTime(item.selectable) }}</v-chip>
         </template>
         <template v-slot:item.money="{ item }">
-            <v-chip color="green">{{ item.selectable.revenue.rub }}₽ / {{ item.selectable.revenue.euro}}€</v-chip>
+            <v-chip color="green">{{ item.selectable.revenue.rub }} ₽ / {{ item.selectable.revenue.euro}} €</v-chip>
         </template>
         <template v-slot:item.earnedXP="{ item }">
             <v-chip color="yellow">{{ item.selectable.earnedXP }}</v-chip>

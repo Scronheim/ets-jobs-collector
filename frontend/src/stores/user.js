@@ -18,7 +18,7 @@ export const useUserStore = defineStore({
                 { title: 'Откуда', align: 'start', sortable: false, key: 'source.city.name', removable: true },
                 { title: 'Куда', align: 'start', sortable: false, key: 'destination.city.name', removable: true },
                 { title: 'Груз', align: 'start', sortable: false, key: 'cargo.name', removable: true },
-                { title: 'Вес груза, т', align: 'start', sortable: true, key: 'mass', removable: true },
+                { title: 'Вес', align: 'start', sortable: true, key: 'mass', removable: true },
                 { title: 'Расстояние', align: 'start', sortable: true, key: 'dist', removable: true },
                 { title: 'Длительность', align: 'start', sortable: true, key: 'jobTime', removable: true },
                 { title: 'Заработок', align: 'start', sortable: true, key: 'money', removable: true },

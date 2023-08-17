@@ -24,24 +24,7 @@
         </v-main>
 
         <v-dialog width="600" v-model="settingsDialog">
-            <v-card title="Настройки">
-                <v-card-text>
-                    <v-row>
-                        <v-col>
-                            <v-select chips multiple label="Заголовки таблицы" v-model="userStore.userSettings.headers"
-                                :items="allHeaders" item-name="title" item-value="key" return-object />
-                        </v-col>
-                    </v-row>
-                    <v-row>
-                        <v-col>
-                            <v-text-field label="User UUID" v-model="userStore.userSettings.UUID"></v-text-field>
-                        </v-col>
-                    </v-row>
-                </v-card-text>
-                <v-card-actions>
-                    <v-btn color="success" block @click="saveAndExit">Сохранить и закрыть</v-btn>
-                </v-card-actions>
-            </v-card>
+            <SettingsForm @close="settingsDialog = false"/>
         </v-dialog>
     </v-app>
 </template>
@@ -54,6 +37,7 @@ import { useToast } from 'vue-toastification';
 import Jobs from '@/components/Jobs'
 import { useUserStore } from './stores/user'
 import StatusButton from './components/buttons/StatusButton';
+import SettingsForm from './components/forms/SettingsForm.vue';
 
 export default {
     setup() {
@@ -63,9 +47,10 @@ export default {
     },
     name: 'App',
     components: {
-        Jobs,
-        StatusButton
-    },
+    Jobs,
+    StatusButton,
+    SettingsForm
+},
     mounted() {
         ipcRenderer.invoke('get-user-settings').then((config) => {
             if (config) {
@@ -88,19 +73,6 @@ export default {
         truck: {},
         job: {},
         settingsDialog: false,
-        allHeaders: [
-            { title: 'Дата', align: 'start', sortable: true, key: 'createdAt', removable: true },
-            { title: 'Тягач', align: 'start', sortable: true, key: 'car', removable: true },
-            { title: 'Откуда', align: 'start', sortable: false, key: 'source.city.name', removable: true },
-            { title: 'Куда', align: 'start', sortable: false, key: 'destination.city.name', removable: true },
-            { title: 'Груз', align: 'start', sortable: false, key: 'cargo.name', removable: true },
-            { title: 'Вес, т', align: 'start', sortable: true, key: 'mass', removable: true },
-            { title: 'Запл. дальность', align: 'start', sortable: true, key: 'plannedDistance.km', removable: true },
-            { title: 'Пройд. расстояние', align: 'start', sortable: true, key: 'dist', removable: true },
-            { title: 'Длительность', align: 'start', sortable: true, key: 'jobTime', removable: true },
-            { title: 'Заработок', align: 'start', sortable: true, key: 'money', removable: true },
-            { title: 'Опыт, XP', align: 'start', sortable: true, key: 'earnedXP', removable: true },
-        ],
         platform: process.platform,
         theme: 'dark',
         isMaximizable: true,
@@ -135,11 +107,6 @@ export default {
         },
         closeWindow() {
             ipcRenderer.invoke('close-window')
-        },
-        saveAndExit() {
-            this.userStore.saveUserSettings()
-            this.userStore.getUserJobs(this.userStore.userSettings.UUID, true)
-            this.settingsDialog = false
         },
         update(data) {
             for (const key of Object.keys(data)) {

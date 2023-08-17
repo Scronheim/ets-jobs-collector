@@ -117,6 +117,12 @@ ipcMain.handle('maximize-window', () => {
 })
 
 
+ipcMain.handle('clear-store', () => {
+    store.clear()
+    app.relaunch()
+    app.quit()
+})
+
 ipcMain.handle('get-user-company', () => {
     return store.get('userCompany')
 })
