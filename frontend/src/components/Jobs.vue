@@ -65,15 +65,25 @@ export default {
         
     },
     data: () => ({
-        
+        realTimeTimer: null,
+        jobTimeInSec: 0,
     }),
     methods: {
+        startRealTimeTimer() {
+            this.jobTimeInSec = 0
+            this.realTimeTimer = setInterval(() => {
+                this.jobTimeInSec++
+            }, 1000)
+        },
+        stopRealTimeTimer() {
+            this.jobTimeInSec = clearInterval(this.realTimeTimer)
+        },
         removeHeader(key) {
             this.userStore.userSettings.headers = this.userStore.userSettings.headers.filter(header => header.key !== key)
             this.userStore.saveUserSettings()
         },
         getJobTime(job) {
-            return dayjs.duration(job.deliveredTimestamp.value - job.startedTimestamp.value, 's').format('HH [ч.] mm [м.] ss [сек.]')
+            return dayjs.duration(job.jobTime? job.jobTime : job.timeTaken, job.jobTime? 's' : 'ms').format('HH [ч.] mm [м.] ss [сек.]')
         },
         async sendJob(job) {
             const truck = {
@@ -89,6 +99,7 @@ export default {
                     euro: job.revenue,
                 },
                 truck,
+                jobTime: this.jobTimeInSec,
                 userAdded: this.userStore.userSettings.UUID
             }
             try {
@@ -149,6 +160,7 @@ export default {
 
         this.telemetry.job.on("delivered", (data) => {
             this.sendJob(data)
+            this.stopRealTimeTimer()
         })
 
         // this.telemetry.job.on(
@@ -156,10 +168,9 @@ export default {
         //   (data) => this.logIt("job", "Job finished")
         // )
 
-        // this.telemetry.job.on(
-        //   "started",
-        //   (data) => this.logIt("job", `New job started, est Income: ${this.currency}${data.income.toLocaleString()}`)
-        // )
+        this.telemetry.job.on("started", (data) => {
+            this.startRealTimeTimer()
+        })
 
         // // Truck events
         // this.telemetry.truck.on(

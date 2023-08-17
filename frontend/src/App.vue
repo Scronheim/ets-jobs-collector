@@ -5,17 +5,15 @@
             <img src="/icon.ico" />
         </template>
 
-        <template v-slot:title>
-            ETS Job Collector
-        </template>
+        <template v-slot:title>ETS Job Collector</template>
     </v-titlebar>
     <v-app>
         <v-app-bar density="compact" class="mt-7">
             <v-btn link to="/">Мои заказы</v-btn>
             <v-btn link to="/company" class="ml-3">Моя компания</v-btn>
             <template v-slot:append>
-                <v-chip :color="sdkActive ? 'success' : 'error'">Подключен к игре</v-chip>
-                <StatusButton :game="game" :job="job"/>
+                <v-chip :color="sdkActive ? 'success' : 'error'">{{ sdkActive ? 'Подключен к игре': 'Нет подключения' }}</v-chip>
+                <StatusButton v-if="sdkActive" :game="game" :job="job"/>
                 <v-btn icon="mdi-cog" @click="settingsDialog = true"></v-btn>
             </template>
         </v-app-bar>
@@ -95,7 +93,7 @@ export default {
             return truckSimTelemetry()
         },
         sdkActive() {
-            return this.telemetry.getGame().sdkActive
+            return this.telemetry.getGame()?.sdkActive
         }
     },
     methods: {
