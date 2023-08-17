@@ -16,6 +16,9 @@
         <template v-slot:item.car="{ item }">
             {{ item.selectable.truck?.brand }} - {{ item.selectable.truck?.model }}
         </template>
+        <template v-slot:item.route="{ item }">
+            {{ item.selectable.source.city.name }} <v-icon icon="mdi-arrow-right"/> {{ item.selectable.destination.city.name }}
+        </template>
         <template v-slot:item.mass="{ item }">
             <v-chip color="blue">{{ (item.selectable.cargo.mass / 1000).toFixed(2) }} т</v-chip>
         </template>
@@ -35,8 +38,8 @@
 </template>
 
 <script>
-import { useToast } from 'vue-toastification';
 import dayjs from 'dayjs'
+import { useToast } from 'vue-toastification';
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import { useUserStore } from './../stores/user'
 
@@ -65,18 +68,17 @@ export default {
         
     },
     data: () => ({
-        realTimeTimer: null,
-        jobTimeInSec: 0,
+
     }),
     methods: {
         startRealTimeTimer() {
-            this.jobTimeInSec = 0
-            this.realTimeTimer = setInterval(() => {
-                this.jobTimeInSec++
+            this.userStore.jobTimeInSec = 0
+            this.this.userStore.realTimeTimer = setInterval(() => {
+                this.this.userStore.jobTimeInSec++
             }, 1000)
         },
         stopRealTimeTimer() {
-            this.jobTimeInSec = clearInterval(this.realTimeTimer)
+            this.this.userStore.jobTimeInSec = clearInterval(this.this.userStore.realTimeTimer)
         },
         removeHeader(key) {
             this.userStore.userSettings.headers = this.userStore.userSettings.headers.filter(header => header.key !== key)
@@ -99,7 +101,7 @@ export default {
                     euro: job.revenue,
                 },
                 truck,
-                jobTime: this.jobTimeInSec,
+                jobTime: this.userStore.jobTimeInSec,
                 userAdded: this.userStore.userSettings.UUID
             }
             try {

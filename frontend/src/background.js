@@ -16,6 +16,7 @@ let win
 
 async function createWindow() {
     // Create the browser window.
+    store.clear()
     const windowSettings = store.get('windowSettings')
     let width = 1790
     let height = 534
@@ -65,7 +66,7 @@ async function createWindow() {
     win.on('resize', (event) => {
         store.set('windowSettings', event.sender.getBounds())
     })
-
+    console.log(process.env.WEBPACK_DEV_SERVER_URL, process.env.IS_TEST);
     if (process.env.WEBPACK_DEV_SERVER_URL) {
         // Load the url of the dev server if in development mode
         await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)

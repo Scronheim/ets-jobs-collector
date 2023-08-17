@@ -15,8 +15,9 @@ export const useUserStore = defineStore({
             headers: [
                 { title: 'Дата', align: 'start', sortable: true, key: 'createdAt', removable: true },
                 { title: 'Тягач', align: 'start', sortable: true, key: 'car', removable: true },
-                { title: 'Откуда', align: 'start', sortable: false, key: 'source.city.name', removable: true },
-                { title: 'Куда', align: 'start', sortable: false, key: 'destination.city.name', removable: true },
+                { title: 'Маршрут', align: 'start', sortable: false, key: 'route', removable: true },
+                // { title: 'Откуда', align: 'start', sortable: false, key: 'source.city.name', removable: true },
+                // { title: 'Куда', align: 'start', sortable: false, key: 'destination.city.name', removable: true },
                 { title: 'Груз', align: 'start', sortable: false, key: 'cargo.name', removable: true },
                 { title: 'Вес', align: 'start', sortable: true, key: 'mass', removable: true },
                 { title: 'Расстояние', align: 'start', sortable: true, key: 'dist', removable: true },
@@ -28,6 +29,8 @@ export const useUserStore = defineStore({
         userCompany: {
             staff: [],
         },
+        realTimeTimer: null,
+        jobTimeInSec: 0,
     }),
     actions: {
         saveUserCompany() {

@@ -5,13 +5,17 @@ import vuetify from './plugins/vuetify'
 import { createPinia } from 'pinia'
 import VueTitleBar from '@wuild/vue-titlebar'
 import dayjs from 'dayjs'
+import { loadFonts } from '@/plugins/webfontloader'
 
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 
 dayjs.extend(require('dayjs/plugin/duration'))
 
+loadFonts()
+
 const pinia = createPinia()
+
 createApp(App)
   .use(vuetify)
   .use(pinia)

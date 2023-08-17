@@ -16,7 +16,7 @@ module.exports = {
                 appId: 'collector.jobs.ets',
                 win: {
                     icon: 'public/icon.ico',
-                    target: ['nsis']
+                    target: ['portable']
                 },
                 nsis: {
                     installerIcon: "public/icon.ico",

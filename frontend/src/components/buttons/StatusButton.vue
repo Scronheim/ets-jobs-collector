@@ -1,9 +1,15 @@
 <template>
     <v-chip class="ml-2" :color="statusColor" :text="statusText"></v-chip>
+    <!-- <v-chip v-if="status === STATUSES.ONJOB" class="ml-2" color="blue">{{ jobTimeDuration }}</v-chip> -->
 </template>
 
 <script setup>
+import dayjs from 'dayjs';
 import { computed } from 'vue';
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
+
 const props = defineProps(['game', 'job'])
 
 const STATUSES = {
@@ -12,6 +18,10 @@ const STATUSES = {
     FREE: 3,
     TOJOB: 4,
 }
+
+const jobTimeDuration = computed(() => {
+    return dayjs.duration(userStore.jobTimeInSec, 's').format('HH:mm:ss')
+})
 
 const status = computed(() => {
     if (props.game?.paused) {

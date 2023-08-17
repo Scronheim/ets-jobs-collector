@@ -12,8 +12,9 @@
             <v-btn link to="/">Мои заказы</v-btn>
             <v-btn link to="/company" class="ml-3">Моя компания</v-btn>
             <template v-slot:append>
-                <v-chip :color="sdkActive ? 'success' : 'error'">{{ sdkActive ? 'Подключен к игре': 'Нет подключения' }}</v-chip>
-                <StatusButton v-if="sdkActive" :game="game" :job="job"/>
+                <v-chip :color="sdkActive ? 'success' : 'error'">{{ sdkActive ? 'Подключен к игре' : 'Нет подключения'
+                }}</v-chip>
+                <StatusButton v-if="sdkActive" :game="game" :job="job" />
                 <v-btn icon="mdi-cog" @click="settingsDialog = true"></v-btn>
             </template>
         </v-app-bar>
@@ -22,7 +23,7 @@
         </v-main>
 
         <v-dialog width="600" v-model="settingsDialog">
-            <SettingsForm @close="settingsDialog = false"/>
+            <SettingsForm @close="settingsDialog = false" />
         </v-dialog>
     </v-app>
 </template>
@@ -45,10 +46,10 @@ export default {
     },
     name: 'App',
     components: {
-    Jobs,
-    StatusButton,
-    SettingsForm
-},
+        Jobs,
+        StatusButton,
+        SettingsForm
+    },
     mounted() {
         ipcRenderer.invoke('get-user-settings').then((config) => {
             if (config) {
@@ -64,7 +65,7 @@ export default {
                 this.userStore.userCompany = JSON.parse(config)
             }
         })
-        this.telemetry.watch({ interval: 10 }, this.update)
+        this.telemetry.watch({ interval: 100 }, this.update)
     },
     data: () => ({
         game: {},
