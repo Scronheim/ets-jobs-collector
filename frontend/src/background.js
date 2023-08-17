@@ -32,7 +32,7 @@ async function createWindow() {
         width,
         height,
         x, y,
-        icon: 'C:\\Users\\scronheim\\projects\\dark-electrea\\frontend\\src\\assets\\icon.png',
+        icon: 'C:\\Users\\scronheim\\projects\\ets-jobs-collector\\frontend\\src\\assets\\icon.png',
         resizable: true,
         frame: false,
         webPreferences: {
@@ -42,7 +42,7 @@ async function createWindow() {
     })
 
     win.setMenuBarVisibility(false)
-    const appIcon = new Tray('C:\\Users\\scronheim\\projects\\dark-electrea\\frontend\\src\\assets\\icon.png')
+    const appIcon = new Tray('C:\\Users\\scronheim\\projects\\ets-jobs-collector\\frontend\\src\\assets\\icon.png')
     const contextMenu = Menu.buildFromTemplate([
         {
             label: 'Показать мои поездки', click: function () {
